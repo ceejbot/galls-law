@@ -19,15 +19,15 @@ build-lists: true
 
 ---
 
-![fit](images/registry_monolith.png)
+# [fit] what's a monolith?
 
-^ npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth.
+Erlang.
 
 ---
 
 ![](images/Monolith-Sun-Moon.png)
 
-^ That is the very definition of a monolith.
+^ What's a monolith?
 
 ---
 
@@ -157,12 +157,20 @@ build-lists: true
 # [fit] Q: How do you cheat?
 # [fit] A: With a proxy.
 
+^ Proxies let you divide & conquer.
+
 ---
 
 # [fit] rewrite piece by piece
 # [fit] proxy to the new pieces
 
 ^ Don't rewrite the whole thing. Rewrite a tiny simple piece.
+
+---
+
+![fit](images/registry_monolith.png)
+
+^ npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth.
 
 ---
 
@@ -188,6 +196,14 @@ build-lists: true
 # [fit] just send everything through
 
 ^ Great time to measure. Metrics, logging, everything! For us, this was also a chance to find out what people were actually doing with the registry.
+
+---
+
+# [fit] record what the proxy does
+# [fit] how do people use your service?
+# [fit] discover its true behavior
+
+^ Talk about this a bit
 
 ---
 
@@ -232,10 +248,19 @@ build-lists: true
 
 ![fit](images/registry_logical.png)
 
+
 ---
 
 # [fit] Microservices &
 # [fit] single-purpose databases.
+
+---
+
+2 transitional slides here
+
+show multiple levels of abstraction
+
+show the chunks of the registry & how they fit together
 
 ---
 
@@ -251,13 +276,17 @@ build-lists: true
 
 ---
 
-# [fit] Advantages
-
----
-
 # [fit] Each piece is simple
 
 ^ More easily debugged & understood.
+
+---
+
+# [fit] faithfully preserved
+# [fit] your mistakes?
+# [fit] NOT A PROBLEM.
+
+^ We have done a bunch of this. Clean up where you can. SEARCH as example.
 
 ---
 
@@ -297,9 +326,10 @@ build-lists: true
 ---
 
 # [fit] faithfully preserved
-# [fit] your mistakes? Doh.
+# [fit] your mistakes?
+# [fit] problem.
 
-^ We have done a bunch of this. Clean up where you can.
+^ SEARCH as example.
 
 ---
 
@@ -316,7 +346,13 @@ build-lists: true
 
 ---
 
-# [fit] Lessons learned
+# [fit] what do I want you to take away?
+
+---
+
+I can't help you with the politics.
+
+But I can tell you that this approach can work.
 
 ---
 
@@ -337,7 +373,7 @@ build-lists: true
 # [fit] proxies are cool.
 # [fit] I'm into proxies now.
 
-^ A proxy will let you divide & conquer.s
+^ A proxy will let you divide & conquer.
 
 ---
 

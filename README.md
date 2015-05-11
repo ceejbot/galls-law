@@ -12,3 +12,6 @@ TBD as photos appear.
 Cape Canaveral rocket launch from [NASA's APOD](http://apod.nasa.gov/apod/ap081001.html).
 
 Monolith + sun + moon image from [2001: A Space Odyssey](http://www.2001aspaceodyssey.org/BigImages/Monolith-Sun-Moon.png)
+
+
+[Easter Island monoliths](http://www.paranormalhaze.com/the-5-most-mysterious-places-in-the-world/)
