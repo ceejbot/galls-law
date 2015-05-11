@@ -44,12 +44,24 @@ build-lists: true
 ---
 
 # [fit] whatever it takes
-# [fit] to get to your
-# [fit] simple working system
+# [fit] to build a system
+# [fit] that satisfies your users
 
 ^ It's far harder to make something that delights your users and is a viable product than it is to scale something after the fact. This is what npm did.
 
 ---
+
+# [fit] success!
+# [fit] now scale it.
+
+---
+
+![](images/easterisland021.jpg)
+
+---
+
+![](images/easterisland021.jpg)
+
 
 # [fit] scaling monoliths
 # [fit] many copies of the full thing
