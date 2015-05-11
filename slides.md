@@ -66,6 +66,10 @@ build-lists: true
 
 ---
 
+# [fit] had to scale another way
+
+---
+
 # [fit] splitting the
 # [fit] monolith
 
@@ -100,7 +104,7 @@ build-lists: true
 # [fit] How Systems Really Work
 # [fit] and How They Fail
 
-^ John Gall: who the dude was
+^ John Gall: a pediatrician, not a computer scientist. Interested in systems theory.
 
 ---
 
@@ -126,6 +130,12 @@ build-lists: true
 
 ---
 
+# [fit] Let's cheat.
+
+^ I promised you we'd be cheating. You can't break the law, no matter how tempted you are to argue with it. You have to write simple working systems first.
+
+---
+
 # [fit] Q: How do you cheat?
 
 ^ There are a lot of options here. I'm going to tell you the one npm took, because it's a networked service. If you're writing web services, this might work for you.
@@ -139,6 +149,8 @@ build-lists: true
 
 # [fit] rewrite piece by piece
 # [fit] proxy to the new pieces
+
+^ Don't rewrite the whole thing. Rewrite a tiny simple piece.
 
 ---
 
