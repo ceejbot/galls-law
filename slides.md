@@ -201,6 +201,10 @@ build-lists: true
 
 ---
 
+![fit](images/proxying_1_bright.png)
+
+---
+
 ![fit](images/proxying_1.png)
 
 ^ Varnish as a proxy: tarball reads go to nginx. Package metadata reads & writes go to couchdb. This simple technique was our first step to breaking up the monolith.
@@ -210,7 +214,11 @@ build-lists: true
 # [fit] Replace Varnish
 # [fit] with a node service
 
-^ You can put some logic into Varnish, but get a lot more mileage out of proxying at the application level. Observability!
+^ You can put some logic into Varnish, but get a lot more mileage out of proxying at the application level. Way more control.
+
+---
+
+![fit](images/proxying_2_bright.png)
 
 ---
 
@@ -222,7 +230,7 @@ build-lists: true
 
 # [fit] just send everything through
 
-^ Great time to measure. Metrics, logging, everything! For us, this was also a chance to find out what people were actually doing with the registry.
+^ Great time to measure. Metrics, logging, everything!
 
 ---
 
@@ -230,12 +238,18 @@ build-lists: true
 # [fit] how do people use your service?
 # [fit] discover its true behavior
 
-^ Talk about this a bit
+^ For us, this was also a chance to find out what people were actually doing with the registry & how long each operation took. Find the hot spots.
 
 ---
 
 # [fit] start pulling pieces out
 # [fit] and sending them to new services
+
+^ Once you know where the hot spots are, or identify a chunk you can understand pull it out.
+
+---
+
+![fit](images/proxying_3_bright.png)
 
 ---
 
@@ -248,21 +262,21 @@ build-lists: true
 # [fit] each service is simple
 # [fit] one concern each
 
-^ Gall's Law is still in force. We still must write simple things & build from there. But
+^ Gall's Law is still in force. We still must write simple things & build from there. In this case, the new simple system is the new service. The existing system is a tiny bit more complicated.
 
 ---
 
 # [fit] modularity
 # [fit] aka information hiding
 
-^ You think about this at the code level, but here we're doing it at the service level.
+^ You think about this at the code level, but here we're doing it at the service level. The implemention of each module is hidden behind the API of the service.
 
 ---
 
 # [fit] now you can change
 # [fit] everything
 
-^
+^ I told you I wasn't going to sell microservices, but I'm selling them. This is for me the neatest part.
 
 ---
 
@@ -273,7 +287,11 @@ build-lists: true
 
 ---
 
-![fit](images/registry_logical.png)
+![fit](images/proxying_4_bright.png)
+
+---
+
+![fit](images/proxying_4.png)
 
 
 ---
