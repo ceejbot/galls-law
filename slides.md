@@ -4,12 +4,6 @@ build-lists: true
 
 ---
 
-## [fit] How we split
-# [fit] a monolith
-## [fit] and lived to tell the tale
-
----
-
 ![left](images/bumper2_nasa_big.jpg)
 # [fit] C J Silverio
 ## [fit] director of engineering, npm
@@ -19,9 +13,11 @@ build-lists: true
 
 ---
 
-# [fit] what's a monolith?
 
-Erlang.
+# [fit] Cheating Gall's Law
+## [fit] How we split
+# [fit] a monolith
+## [fit] and lived to tell the tale
 
 ---
 
@@ -37,9 +33,25 @@ Erlang.
 
 ---
 
+![fit](images/registry_monolith.png)
+
+^ npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth.
+
+---
+
+![](images/registry_monolith.png)
+# [fit] npm's monolith:
+# [fit] embedded in couchdb
+
+^ The npm registry was x thousand lines of js embedded in couchdb.
+
+---
+
 ![](images/Monolith-Sun-Moon.png)
 # [fit] monoliths
 # [fit] work just fine
+
+^ The registry was just fine as a couch app, using couch auth.
 
 ---
 
@@ -54,9 +66,13 @@ Erlang.
 # [fit] success!
 # [fit] now scale it.
 
+^ What happens next is that you succeed.
+
 ---
 
 ![](images/easterisland021.jpg)
+
+^ You're gonna need more monoliths.
 
 ---
 
@@ -66,37 +82,40 @@ Erlang.
 # [fit] scaling monoliths
 # [fit] many copies of the full thing
 
-^ After a while this becomes expensive. Your monolith is probably expensive.
+^ After a while this becomes expensive. Your monolith is probably expensive. And sometimes you get exponential growth.
 
 ---
 
+![fit](images/npm-growth-graph.png)
+
+^ Blue line packages. Red line monthly downloads. Joined at 200M/month. Now it's 1.4 billion/month.
+
+---
+
+![](images/easterisland021.jpg)
 # [fit] Exponential growth of node
 # [fit] resulted in exponential growth
 # [fit] of the npm registry
 
-^ Eventually we needed to break out of that single app embedded inside couchdb.
-
----
-
-# [fit] had to scale another way
+^ Eventually we needed to break out of that single app embedded inside couchdb. had to scale another way
 
 ---
 
 # [fit] splitting the
 # [fit] monolith
 
-^ Eventually you need to scale differently: by improving sub-pieces of the monolith.
+^ Eventually you need to scale differently: you break up the monolith..
 
 ---
 
 # [fit] yay microservices?
 
-^ but there's a catch
+^ This is what everybody says. Not going to bludgeon you with yet another discussion of microservices & why you want them. Let's suppose you've decided to split things up.
 
 ---
 
 # [fit] Your monolith is complex.
-# [fit] A split system is complex.
+# [fit] A split system is more complex.
 
 ^ Complexity is the enemy of everything.
 
@@ -136,9 +155,16 @@ Erlang.
 ---
 
 # [fit] Gall's Law
-# [fit] is in our way
+# [fit] says we can't write our
+# [fit] complex replacement
 
 ^ The system we need to replicate is complicated. We can't just build it from scratch. We have some advantages here. We know what a working system looks like.
+
+---
+
+# [fit] how do you split
+# [fit] a monolith
+# [fit] successfully?
 
 ---
 
@@ -149,12 +175,13 @@ Erlang.
 ---
 
 # [fit] Q: How do you cheat?
+# [fit] A: By not rewriting the whole thing.
 
 ^ There are a lot of options here. I'm going to tell you the one npm took, because it's a networked service. If you're writing web services, this might work for you.
 
 ---
 
-# [fit] Q: How do you cheat?
+# [fit] Q: But how, CJ?
 # [fit] A: With a proxy.
 
 ^ Proxies let you divide & conquer.
@@ -164,13 +191,13 @@ Erlang.
 # [fit] rewrite piece by piece
 # [fit] proxy to the new pieces
 
-^ Don't rewrite the whole thing. Rewrite a tiny simple piece.
+^ Don't rewrite the whole thing. Rewrite a simple piece. Let's look at an example.
 
 ---
 
 ![fit](images/registry_monolith.png)
 
-^ npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth.
+^ Here's npm's monolith pre-split. Now what what we do.
 
 ---
 
