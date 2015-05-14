@@ -321,6 +321,10 @@ show the chunks of the registry & how they fit together
 
 ---
 
+# [fit] the awesome
+
+---
+
 # [fit] Each piece is simple
 
 ^ More easily debugged & understood.
@@ -331,14 +335,14 @@ show the chunks of the registry & how they fit together
 # [fit] your mistakes?
 # [fit] NOT A PROBLEM.
 
-^ We have done a bunch of this. Clean up where you can. SEARCH as example.
+^ You might not understand your service & how your users depend on it! What you think of as a bug might be a critical part of somebody's workflow. (Search)
 
 ---
 
-# [fit] Everything is now
-# [fit] observable
+# [fit] more scaling dials to turn
+# [fit] finer-grained perf data
 
-^ Metrics & logging. Can scale by multiplication of a smaller piece. For us this was a huge win.
+^ Metrics & logging. Can scale by multiplication of a smaller piece. For us this was a huge win. SEARCH. CouchDB was sweating.
 
 ---
 
@@ -349,7 +353,7 @@ show the chunks of the registry & how they fit together
 
 ---
 
-# [fit] pitfalls
+# [fit] the pitfalls
 
 ^ There's always a tradeoff. Nothing ever comes free.
 
@@ -358,7 +362,7 @@ show the chunks of the registry & how they fit together
 # [fit] now you've got a
 # [fit] distributed system
 
-^ You had one before but mostly you pretended you didn't because the hard parts were handled by somebody else. Now you have one that's entirely your responsibilty.
+^ You had one before but mostly you pretended you didn't because the hard parts were handled by somebody else. Now you have one that's entirely your responsibilty. We had race conditions. We're still not handling backpressure everywhere we need to.
 
 ---
 
@@ -366,7 +370,7 @@ show the chunks of the registry & how they fit together
 
 > I see you have a poorly structured monolith. Would you like me to convert it into a poorly structured set of microservices?
 
-^ Get it working, iterate & clean it up.
+^ Cannot save you from poor decisions about modularity.
 
 ---
 
@@ -374,12 +378,12 @@ show the chunks of the registry & how they fit together
 # [fit] your mistakes?
 # [fit] problem.
 
-^ SEARCH as example.
+^ SEARCH as example. We split it off by routing it to dedicated Couchdbs, then found out that this is where our couchdb scaling problem had been.
 
 ---
 
-# [fit] Second system syndrome:
-# [fit] this time we'll do it right
+# [fit] Second system syndrome
+# [fit] "this time we'll do it right"
 
 ^ Doing it right usually means generalizing EVERYTHING because you just went through the pain of adding generalization here & there to a system that wasn't designed for it. Don't do it!
 
@@ -395,12 +399,6 @@ show the chunks of the registry & how they fit together
 
 ---
 
-I can't help you with the politics.
-
-But I can tell you that this approach can work.
-
----
-
 # [fit] build your working system first
 # [fit] scale it later
 
@@ -412,6 +410,12 @@ But I can tell you that this approach can work.
 # [fit] complex later
 
 ^ Be ruthless about this.
+
+---
+
+# [fit] Don't be afraid to change your system.
+
+^ I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works
 
 ---
 
