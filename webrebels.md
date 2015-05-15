@@ -191,7 +191,13 @@ build-lists: true
 # [fit] rewrite piece by piece
 # [fit] proxy to the new pieces
 
-^ Don't rewrite the whole thing. Rewrite a simple piece. Let's look at an example.
+^ Don't rewrite the whole thing. Rewrite a simple piece.
+
+---
+
+![fit](images/use_a_proxy.png)
+
+^ Let's look at an example.
 
 ---
 
@@ -203,11 +209,12 @@ build-lists: true
 
 ![fit](images/proxying_1_bright.png)
 
+
 ---
 
 ![fit](images/proxying_1.png)
 
-^ Varnish as a proxy: tarball reads go to nginx. Package metadata reads & writes go to couchdb. This simple technique was our first step to breaking up the monolith.
+^ Varnish as a proxy: tarball reads go to nginx. Package metadata reads & writes go to couchdb. This simple technique was our first step to breaking up the monolith. This one change relieved about 90% of our couchdb performance problems.
 
 ---
 
@@ -315,7 +322,7 @@ build-lists: true
 
 ![fit](images/registry_john_madden.png)
 
-^ The real system diagram looks like this, but most of the time I don't need to think about it at this level.
+^ The real system diagram looks like this, but most of the time I don't need to think about it at this level. (If you want the details here, come to NodeConf OneShot on Saturday.)
 
 ---
 
