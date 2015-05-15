@@ -301,23 +301,21 @@ build-lists: true
 
 ---
 
-2 transitional slides here
+![fit](images/scalable_pieces.png)
 
-show multiple levels of abstraction
+^ Here's a pretty handwave-y block diagram of the registry. Each of these pieces is a scalable unit.
 
-show the chunks of the registry & how they fit together
+---
+
+![fit](images/doubled_pieces.png)
+
+^ Hey look, I just made most of my system redundant across AWS, just by replicating the logical modules.
 
 ---
 
 ![fit](images/registry_john_madden.png)
 
-^ The registry looks like this now.
-
----
-
-# [fit] Nobody noticed this change.
-
-^ 120 seconds of downtime during the rollout thanks to a surprise merge.
+^ The real system diagram looks like this, but most of the time I don't need to think about it at this level.
 
 ---
 
@@ -413,16 +411,25 @@ show the chunks of the registry & how they fit together
 
 ---
 
-# [fit] Don't be afraid to change your system.
+# [fit] Be bold.
+# [fit] you can change your system.
 
-^ I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works
+^ I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works.
+
+---
+
+# [fit] Nobody noticed
+# [fit] when we changed
+# [fit] the entire npm registry.
+
+^ 120 seconds of downtime during the rollout thanks to a surprise merge. I'm a schlub. If I can do it, you can do it.
 
 ---
 
 # [fit] proxies are cool.
 # [fit] I'm into proxies now.
 
-^ A proxy will let you divide & conquer.
+^ Put a proxy on it. A proxy will let you divide & conquer.
 
 ---
 
