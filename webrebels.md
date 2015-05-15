@@ -303,8 +303,10 @@ build-lists: true
 
 ---
 
-# [fit] Microservices &
-# [fit] single-purpose databases.
+# [fit] the system overall is complex
+# [fit] but loosely coupled
+
+^ Changes can still be understood.
 
 ---
 
@@ -332,15 +334,7 @@ build-lists: true
 
 # [fit] Each piece is simple
 
-^ More easily debugged & understood.
-
----
-
-# [fit] faithfully preserved
-# [fit] your mistakes?
-# [fit] NOT A PROBLEM.
-
-^ You might not understand your service & how your users depend on it! What you think of as a bug might be a critical part of somebody's workflow. (Search)
+^ More easily debugged & understood. Load on any one part can be characterized, because you've teased it out.
 
 ---
 
@@ -355,6 +349,14 @@ build-lists: true
 # [fit] each piece hides implementation
 
 ^ Can change the user database without the rest of the system caring.
+
+---
+
+# [fit] faithfully preserved
+# [fit] your mistakes?
+# [fit] NOT A PROBLEM.
+
+^ You might not understand your service & how your users depend on it! What you think of as a bug might be a critical part of somebody's workflow. (Search)
 
 ---
 
@@ -400,7 +402,10 @@ build-lists: true
 
 ---
 
-# [fit] what do I want you to take away?
+# [fit] put this technique
+# [fit] into your toolbox
+
+^ Start recapping.
 
 ---
 
