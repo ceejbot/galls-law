@@ -261,7 +261,13 @@ build-lists: true
 # [fit] second implementation
 # [fit] of that interface
 
-^ Here's what our next steps looked like.
+---
+
+# [fit] a proxy service lets you
+# [fit] flip back & forth
+# [fit] between implementations
+
+^ You can test your assumption. Send a portion of traffic through. Here's what our next steps looked like.
 
 ---
 
@@ -283,18 +289,11 @@ build-lists: true
 
 ---
 
-# [fit] each service is simple
-# [fit] one concern each
+# [fit] each service is a module
+# [fit] a simple, testable system
+# [fit] when viewed in isolation
 
 ^ Gall's Law is still in force. We still must write simple things & build from there. In this case, the new simple system is the new service. The existing system is a tiny bit more complicated.
-
----
-
-# [fit] a proxy service lets you
-# [fit] flip back & forth
-# [fit] between implementations
-
-^ You can test your assumption. Send a portion of traffic through.
 
 ---
 
@@ -318,26 +317,6 @@ build-lists: true
 
 ![fit](images/proxying_4.png)
 
-
----
-
-# [fit] the system overall is complex
-# [fit] but loosely coupled
-
-^ Changes can still be understood.
-
----
-
-![fit](images/scalable_pieces.png)
-
-^ Here's a pretty handwave-y block diagram of the registry. Each of these pieces is a scalable unit.
-
----
-
-![fit](images/doubled_pieces.png)
-
-^ Hey look, I just made most of my system redundant across AWS, just by replicating the logical modules.
-
 ---
 
 ![fit](images/registry_john_madden.png)
@@ -360,6 +339,13 @@ build-lists: true
 # [fit] finer-grained perf data
 
 ^ Metrics & logging. Can scale by multiplication of a smaller piece. For us this was a huge win. SEARCH. CouchDB was sweating.
+
+---
+
+# [fit] the system overall is complex
+# [fit] but loosely coupled
+
+^ Changes can still be understood. Changes are isolated.
 
 ---
 

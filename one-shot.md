@@ -16,6 +16,26 @@ we just finished a big rewrite: now we're a node service
 or set of services
 
 
+---
+
+![fit](images/scalable_pieces.png)
+
+^ Here's a pretty handwave-y block diagram of the registry. Each of these pieces is a scalable unit.
+
+---
+
+![fit](images/doubled_pieces.png)
+
+^ Hey look, I just made most of my system redundant across AWS, just by replicating the logical modules.
+
+---
+
+![fit](images/registry_john_madden.png)
+
+^ The real system diagram looks like this, but most of the time I don't need to think about it at this level. (If you want the details here, come to NodeConf OneShot on Saturday.)
+
+
+
 
 ---
 
