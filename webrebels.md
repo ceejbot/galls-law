@@ -135,7 +135,7 @@ build-lists: true
 # [fit] How Systems Really Work
 # [fit] and How They Fail
 
-^ John Gall: a pediatrician, not a computer scientist. Interested in systems theory.
+^ John Gall: a pediatrician, not a computer scientist. Interested in systems theory. This is the title of his big book. Systems operate in a constant state of failure.
 
 ---
 
@@ -188,13 +188,6 @@ build-lists: true
 
 ---
 
-# [fit] rewrite piece by piece
-# [fit] proxy to the new pieces
-
-^ Don't rewrite the whole thing. Rewrite a simple piece.
-
----
-
 ![fit](images/use_a_proxy.png)
 
 ^ Let's look at an example.
@@ -218,6 +211,7 @@ build-lists: true
 
 ---
 
+# [fit] now let's make our proxy smart
 # [fit] Replace Varnish
 # [fit] with a node service
 
@@ -235,6 +229,7 @@ build-lists: true
 
 ---
 
+# [fit] first step
 # [fit] just send everything through
 
 ^ Great time to measure. Metrics, logging, everything!
@@ -249,10 +244,24 @@ build-lists: true
 
 ---
 
-# [fit] start pulling pieces out
-# [fit] and sending them to new services
+# [fit] second step
+# [fit] divide & conquer
 
-^ Once you know where the hot spots are, or identify a chunk you can understand pull it out.
+^ Don't rewrite the whole thing. Rewrite a simple piece.
+
+---
+
+# [fit] slice off a part of the system
+# [fit] into a module
+# [fit] with a clearly-defined interface
+
+---
+
+# [fit] then write a
+# [fit] second implementation
+# [fit] of that interface
+
+^ Here's what our next steps looked like.
 
 ---
 
@@ -266,6 +275,14 @@ build-lists: true
 
 ---
 
+# [fit] beat Gall's Law with
+# [fit] modularity
+# [fit] aka information hiding
+
+^ You think about this at the code level, but here we're doing it at the service level. The implemention of each module is hidden behind the API of the service.
+
+---
+
 # [fit] each service is simple
 # [fit] one concern each
 
@@ -273,10 +290,11 @@ build-lists: true
 
 ---
 
-# [fit] modularity
-# [fit] aka information hiding
+# [fit] a proxy service lets you
+# [fit] flip back & forth
+# [fit] between implementations
 
-^ You think about this at the code level, but here we're doing it at the service level. The implemention of each module is hidden behind the API of the service.
+^ You can test your assumption. Send a portion of traffic through.
 
 ---
 
@@ -345,18 +363,10 @@ build-lists: true
 
 ---
 
-# [fit] modularity
-# [fit] each piece hides implementation
+# [fit] you have a working system
+# [fit] every step of the way
 
-^ Can change the user database without the rest of the system caring.
-
----
-
-# [fit] faithfully preserved
-# [fit] your mistakes?
-# [fit] NOT A PROBLEM.
-
-^ You might not understand your service & how your users depend on it! What you think of as a bug might be a critical part of somebody's workflow. (Search)
+^ This approach is much safer than a total rewrite. You can test each piece separately. This system is getting steadily more complex, but that's okay. You're evolving a working system.
 
 ---
 
@@ -381,14 +391,6 @@ build-lists: true
 
 ---
 
-# [fit] faithfully preserved
-# [fit] your mistakes?
-# [fit] problem.
-
-^ SEARCH as example. We split it off by routing it to dedicated Couchdbs, then found out that this is where our couchdb scaling problem had been.
-
----
-
 # [fit] Second system syndrome
 # [fit] "this time we'll do it right"
 
@@ -409,17 +411,10 @@ build-lists: true
 
 ---
 
-# [fit] build your working system first
+# [fit] simple working service first
 # [fit] scale it later
 
-^ Don't be ridiculous about scaling, but don't worry about it. You'll be able to afford it later if you've built something people want.
-
----
-
-# [fit] simple first
-# [fit] complex later
-
-^ Be ruthless about this.
+^ Don't be ridiculous about scaling, but don't worry about it. You'll be able to afford it later if you've built something people want. Be ruthless about this.
 
 ---
 
@@ -446,3 +441,5 @@ build-lists: true
 ---
 
 # [fit] npm loves you
+
+^ Got questions? Grab me later.
