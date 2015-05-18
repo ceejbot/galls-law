@@ -35,7 +35,7 @@ build-lists: true
 
 ![fit](images/registry_monolith.png)
 
-^ npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth.
+^ npm registry 1.0: a monolith
 
 ---
 
@@ -43,7 +43,8 @@ build-lists: true
 # [fit] npm's monolith:
 # [fit] embedded in couchdb
 
-^ The npm registry was x thousand lines of js embedded in couchdb.
+^ npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth.
+
 
 ---
 
@@ -51,7 +52,7 @@ build-lists: true
 # [fit] monoliths
 # [fit] work just fine
 
-^ The registry was just fine as a couch app, using couch auth.
+^ The registry was just fine as a couch app, using couch auth. When there were 10K modules, practically anything was going to work.
 
 ---
 
@@ -59,14 +60,14 @@ build-lists: true
 # [fit] to build a system
 # [fit] that satisfies your users
 
-^ It's far harder to make something that delights your users and is a viable product than it is to scale something after the fact. This is what npm did.
+^ When you start, your job is to make a thing people want to use. It's hard to make something that delights your users and is a viable product
 
 ---
 
 # [fit] success!
 # [fit] now scale it.
 
-^ What happens next is that you succeed.
+^ What happens next is that you succeed. Your next job is to SURVIVE the fact that people want to use it.
 
 ---
 
@@ -82,13 +83,13 @@ build-lists: true
 # [fit] scaling monoliths
 # [fit] many copies of the full thing
 
-^ After a while this becomes expensive. Your monolith is probably expensive. And sometimes you get exponential growth.
+^ Scaling horizontally. You've got a single widget. You just make more copies of it. And sometimes you *really* succeed.
 
 ---
 
 ![fit](images/npm-growth-graph.png)
 
-^ Blue line packages. Red line monthly downloads. Joined at 200M/month. Now it's 1.4 billion/month.
+^ Blue line packages. Red line monthly downloads. Joined at 150 million/month. Now it's 1.4 billion/month. 68 million dls in a single day.
 
 ---
 
@@ -97,20 +98,35 @@ build-lists: true
 # [fit] resulted in exponential growth
 # [fit] of the npm registry
 
-^ Eventually we needed to break out of that single app embedded inside couchdb. had to scale another way
+^ This was node growing & the registry being good enough at making its users happy.
+
+---
+
+![](images/easterisland021.jpg)
+# [fit] exponential monoliths
+# [fit] were going to be expensive
+
+^ Also they were on fire. Had to scale some way other than making a lot of copies of our couchdb.
 
 ---
 
 # [fit] splitting the
 # [fit] monolith
 
-^ Eventually you need to scale differently: you break up the monolith..
+^ You need to scale differently: you break up the monolith..
 
 ---
 
 # [fit] yay microservices?
 
 ^ This is what everybody says. Not going to bludgeon you with yet another discussion of microservices & why you want them. Let's suppose you've decided to split things up.
+
+---
+
+# [fit] just rewrite everything!
+# [fit] what's the problem?
+
+^ Just rewrite it all!
 
 ---
 
@@ -158,13 +174,15 @@ build-lists: true
 # [fit] says we can't write our
 # [fit] complex replacement
 
-^ The system we need to replicate is complicated. We can't just build it from scratch. We have some advantages here. We know what a working system looks like.
+^ The system we need to replicate is complicated. We can't just build it from scratch. Most of the attempts to do this that I've seen in my career have ended badly. second system syndrome.
 
 ---
 
 # [fit] how do you split
 # [fit] a monolith
 # [fit] successfully?
+
+^ so how?
 
 ---
 
@@ -181,8 +199,22 @@ build-lists: true
 
 ---
 
-# [fit] Q: But how, CJ?
-# [fit] A: With a proxy.
+# [fit] slice off a part of the system
+# [fit] into a module
+# [fit] with a clearly-defined interface
+
+^ Some part of your system, some feature, can be thought of as a module. Maybe it even is a module inside the monolith.
+
+---
+
+# [fit] then write a
+# [fit] second implementation
+# [fit] of that interface
+
+---
+
+# [fit] split your traffic
+# [fit] with a proxy
 
 ^ Proxies let you divide & conquer.
 
@@ -190,18 +222,19 @@ build-lists: true
 
 ![fit](images/use_a_proxy.png)
 
-^ Let's look at an example.
+^ For you visual thinkers, here's this incredibly simple approach. Let's look at an example.
 
 ---
 
 ![fit](images/registry_monolith.png)
 
-^ Here's npm's monolith pre-split. Now what what we do.
+^ Here's npm's monolith pre-split. Now watch what we do.
 
 ---
 
 ![fit](images/proxying_1_bright.png)
 
+^ go to next
 
 ---
 
@@ -221,11 +254,13 @@ build-lists: true
 
 ![fit](images/proxying_2_bright.png)
 
+^ go to next
+
 ---
 
 ![fit](images/proxying_2.png)
 
-^ We called it the registry frontdoor, because all traffic goes through it.
+^ We called it the registry frontdoor, because all traffic goes through it. You'll notice that it's doing nothing right now.
 
 ---
 
@@ -247,31 +282,13 @@ build-lists: true
 # [fit] second step
 # [fit] divide & conquer
 
-^ Don't rewrite the whole thing. Rewrite a simple piece.
-
----
-
-# [fit] slice off a part of the system
-# [fit] into a module
-# [fit] with a clearly-defined interface
-
----
-
-# [fit] then write a
-# [fit] second implementation
-# [fit] of that interface
-
----
-
-# [fit] a proxy service lets you
-# [fit] flip back & forth
-# [fit] between implementations
-
-^ You can test your assumption. Send a portion of traffic through. Here's what our next steps looked like.
+^ Now that you have data, replace a piece of your monolith. Don't rewrite the whole thing. Rewrite a simple piece.  Here's what our next steps looked like.
 
 ---
 
 ![fit](images/proxying_3_bright.png)
+
+^ go to next
 
 ---
 
@@ -285,7 +302,7 @@ build-lists: true
 # [fit] modularity
 # [fit] aka information hiding
 
-^ You think about this at the code level, but here we're doing it at the service level. The implemention of each module is hidden behind the API of the service.
+^ You think about this at the code level, but here we're doing it at the service level. The implementation of each module is hidden behind the API of the service.
 
 ---
 
@@ -293,10 +310,11 @@ build-lists: true
 # [fit] a simple, testable system
 # [fit] when viewed in isolation
 
-^ Gall's Law is still in force. We still must write simple things & build from there. In this case, the new simple system is the new service. The existing system is a tiny bit more complicated.
+^ Gall's Law is still in force. We still must write simple things & build from there. In this case, the new simple system is the new service. The existing working system evolved slightly to be more complex.
 
 ---
 
+# [fit] best part:
 # [fit] now you can change
 # [fit] everything
 
@@ -307,7 +325,7 @@ build-lists: true
 # [fit] your platform
 # [fit] your database
 
-^ We went from js inside couchdb to js in node services. We also pulled data out of couchdb onto the file system and into postgres.
+^ We went from js inside couchdb to js in node services.
 
 ---
 
@@ -316,6 +334,14 @@ build-lists: true
 ---
 
 ![fit](images/proxying_4.png)
+
+^ We also changed how we were storing data: we pulled data out of couchdb onto the file system and into postgres.
+
+---
+
+![fit](images/proxying_4.png)
+
+# [fit] why stop there?
 
 ---
 
@@ -327,11 +353,13 @@ build-lists: true
 
 # [fit] the awesome
 
+^ Let's talk good parts & bad parts.
+
 ---
 
 # [fit] Each piece is simple
 
-^ More easily debugged & understood. Load on any one part can be characterized, because you've teased it out.
+^ More easily debugged & understood. Load on any one part can be characterized, because you've separated it. This was our biggest win: we identified the hot spots this way.
 
 ---
 
@@ -353,6 +381,14 @@ build-lists: true
 # [fit] every step of the way
 
 ^ This approach is much safer than a total rewrite. You can test each piece separately. This system is getting steadily more complex, but that's okay. You're evolving a working system.
+
+---
+
+# [fit] a proxy service lets you
+# [fit] flip back & forth
+# [fit] between implementations
+
+^ You can test your assumptions. Send a portion of traffic through & load test. Flip back if you've got bugs.
 
 ---
 
@@ -404,8 +440,8 @@ build-lists: true
 
 ---
 
-# [fit] Be bold.
-# [fit] you can change your system.
+# [fit] Be bold
+# [fit] you can change your system
 
 ^ I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works.
 
@@ -413,7 +449,7 @@ build-lists: true
 
 # [fit] Nobody noticed
 # [fit] when we changed
-# [fit] the entire npm registry.
+# [fit] the entire npm registry
 
 ^ 120 seconds of downtime during the rollout thanks to a surprise merge. I'm a schlub. If I can do it, you can do it.
 
