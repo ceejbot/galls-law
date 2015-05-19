@@ -19,11 +19,13 @@ build-lists: true
 # [fit] a monolith
 ## [fit] and lived to tell the tale
 
+^ If you haven't heard of Gall's Law, you'll know it well by the end of this talk. Not going to start there. Start with a monolith.
+
 ---
 
 ![](images/Monolith-Sun-Moon.png)
 
-^ What's a monolith?
+^ Lots of us start with monoliths! What's a monolith?
 
 ---
 
@@ -31,11 +33,13 @@ build-lists: true
 # [fit] monolith
 # [fit] everything in one process
 
+^ Really easy to write, often easy to deploy. Easy to think about.
+
 ---
 
 ![fit](images/registry_monolith.png)
 
-^ npm registry 1.0: a monolith
+^ npm registry started with one of these!  
 
 ---
 
@@ -43,8 +47,7 @@ build-lists: true
 # [fit] npm's monolith:
 # [fit] embedded in couchdb
 
-^ npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth.
-
+^ npm registry 1.0: a monolith npm like a lot of systems was originally very simple. The registry was a few thousand lines of javascript embedded inside CouchDB. Auth was couch's auth. Package tarballs stored inside couch.
 
 ---
 
@@ -60,7 +63,7 @@ build-lists: true
 # [fit] to build a system
 # [fit] that satisfies your users
 
-^ When you start, your job is to make a thing people want to use. It's hard to make something that delights your users and is a viable product
+^ When you start, your job is to make a thing people want to use. It's hard to make something that delights your users and is a viable product. You probably don't have a scaling problem.
 
 ---
 
@@ -89,7 +92,7 @@ build-lists: true
 
 ![fit](images/npm-growth-graph.png)
 
-^ Blue line packages. Red line monthly downloads. Joined at 150 million/month. Now it's 1.4 billion/month. 68 million dls in a single day.
+^ Ever seen an exponential growth chart? This is on. Blue line packages. Red line monthly downloads. Joined at 150 million/month. Now it's 1.4 billion/month. 68 million dls in a single day.
 
 ---
 
@@ -98,7 +101,7 @@ build-lists: true
 # [fit] resulted in exponential growth
 # [fit] of the npm registry
 
-^ This was node growing & the registry being good enough at making its users happy.
+^ This is all of YOU using node to write web apps. This was node growing & the registry being good enough at making its users happy.
 
 ---
 
@@ -113,7 +116,7 @@ build-lists: true
 # [fit] splitting the
 # [fit] monolith
 
-^ You need to scale differently: you break up the monolith..
+^ You need to scale differently: you break up the monolith.
 
 ---
 
@@ -133,7 +136,7 @@ build-lists: true
 # [fit] Your monolith is complex.
 # [fit] A split system is more complex.
 
-^ Complexity is the enemy of everything.
+^ Complexity is the enemy of everything. And worse, there's a famous problem with rewrites.
 
 ---
 
@@ -151,7 +154,7 @@ build-lists: true
 # [fit] How Systems Really Work
 # [fit] and How They Fail
 
-^ John Gall: a pediatrician, not a computer scientist. Interested in systems theory. This is the title of his big book. Systems operate in a constant state of failure.
+^ John Gall: a pediatrician. Interested in systems theory. This is the title of his big book, which is a darkly funny set of observations on systems of all kind. Insight: Systems operate in a constant state of failure.
 
 ---
 
@@ -170,6 +173,14 @@ build-lists: true
 
 ---
 
+# [fit] "If a system is working,
+# [fit] leave it alone.
+# [fit] Don't change anything."
+
+^ Doom and gloom!
+
+---
+
 # [fit] Gall's Law
 # [fit] says we can't write our
 # [fit] complex replacement
@@ -182,7 +193,7 @@ build-lists: true
 # [fit] a monolith
 # [fit] successfully?
 
-^ so how?
+^ so how? npm is not on fire today, so obviously I know a secret.
 
 ---
 
@@ -273,7 +284,7 @@ build-lists: true
 
 # [fit] record what the proxy does
 # [fit] how do people use your service?
-# [fit] discover its true behavior
+# [fit] measure performance
 
 ^ For us, this was also a chance to find out what people were actually doing with the registry & how long each operation took. Find the hot spots.
 
@@ -294,7 +305,7 @@ build-lists: true
 
 ![fit](images/proxying_3.png)
 
-^ Authorization & package validation are now pulled out of couch into services.
+^ Authorization & package validation are now pulled out of couch into services. Woah, we just rewrote two things.
 
 ---
 
@@ -349,6 +360,13 @@ build-lists: true
 
 ^ The real system diagram looks like this, but most of the time I don't need to think about it at this level. (If you want the details here, come to NodeConf OneShot on Saturday.)
 
+
+---
+
+![fit](images/registry_monolith_still.png)
+
+^ Notice something here? It's our original monolith, still there, chugging along, just doing less than it used to.
+
 ---
 
 # [fit] the awesome
@@ -357,7 +375,8 @@ build-lists: true
 
 ---
 
-# [fit] Each piece is simple
+# [fit] Each piece is a
+# [fit] simple system
 
 ^ More easily debugged & understood. Load on any one part can be characterized, because you've separated it. This was our biggest win: we identified the hot spots this way.
 
