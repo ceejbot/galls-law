@@ -1,20 +1,96 @@
+build-lists: true
 # [fit] npm registry 2.0
 # [fit] deep-dive
 
 ---
 
-Until the last couple of months there
-was very little node in npm's registry
+![fit](images/registry_monolith.png)
 
-It was mostly a javascript application running
-embedded in couchdb
+---
 
-some support systems written in node
+![](images/registry_monolith.png)
+# [fit] registry 1.0
+# [fit] embedded in couchdb
 
-we just finished a big rewrite: now we're a node service
+---
 
-or set of services
+# [fit] javascript but not node
 
+^ some support systems written in node
+
+---
+
+# advantages
+
+* couchdb's replication is awesome
+* didn't have to implement auth
+* got away with storing package tarballs as couch attachments
+
+---
+
+# disadvantages
+
+* all of this fell over at scale
+* tarballs fell over first
+* we aren't erlang experts
+
+^ Base64-encoded binary blobs. Observability. Couch has a module system, but it isn't npm.  
+
+---
+
+# early 2014: stability
+
+* pulled out tarballs
+* put varnish in front of everything
+* fastly CDN for geolocality
+
+---
+
+# [fit] end 2014: rewrite
+
+---
+
+# [fit] shipped the core of it
+# [fit] as npm-enterprise
+# [fit] "npm in a box" service
+
+---
+
+# [fit] had a working npm in node
+# [fit] before we migrated the
+# [fit] public registry to it
+
+---
+
+# [fit] live for more than a month
+
+^ I teased this on twitter periodically. I would announce that "you're soaking in it" when new registry was live.
+
+---
+
+# [fit] turning on private modules
+# [fit] was flipping a feature switch
+
+^ This is how you want it to be.
+
+---
+
+# [fit] rewrite benefits
+
+* future scaling
+* ability to add features easily
+* a use for our node expertise
+
+---
+
+# [fit] registry 2.0:
+# [fit] lots of node
+
+^ we just finished a big rewrite: now we're a node service
+
+---
+
+# [fit] yay microservices
 
 ---
 
@@ -39,14 +115,77 @@ or set of services
 
 ---
 
-# the stack
+# [fit] the stack (top)
+
+* aws ec2
+* ubuntu trusty
+* mostly redundant across us east/west
+
+^ Amazon! Everybody uses it. it's cheap. It give us lots of control. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. we have a couple single pts of failure.
+
+---
+
+# [fit] the stack (middle)
 
 * haproxy for load balancing
-* couchdb for package data storage
 * postgres for all other data
 * redis for caching
 * nginx for static files
-* node-restify for node services
+
+---
+
+# [fit] the dbs
+
+* couchdb for package data storage
+* postgres for users, billing, access control lists
+* replica of the package data in postres to drive website
+
+---
+
+# [fit] node frameworks
+
+* web site only: hapi
+* everything else: restify
+
+^ The public downloads service is hapi, but we'll rewrite that when we get around to making it perform well.
+
+---
+
+# node-restify
+
+* simple
+* barely a framework
+* observable
+* sinatra/express routing
+* we like the connect middleware style
+
+
+---
+
+# configuration via etcd
+
+## https://github.com/coreos/etcd
+
+A highly available key/value store intended for config & service discovery. We recursively store & extract json blobs from it using `renv`.
+
+^ How we do configuration.
+
+---
+
+# lots of complexity
+
+* each piece has a well-defined responsibility
+* each piece can be redundant
+* exceptions: db write primaries
+
+---
+
+# conservatism won with node
+
+* we're mostly on node 0.10.37
+* memory leaks
+* will try again with iojs 1.8.x
+* or with node now that iojs is folded in :)
 
 
 ---
@@ -76,34 +215,22 @@ The components are all open-sourced.
 * `jthooks`: run by ansible to set up github web hooks
 * `jthoober`: a webhook server run on each box that listens for webhook pushes from github
 * `rderby`: rolling restarts that stop when monitoring endpoints don't respond
-* 'renv': recursively stores & reads json blobs from `etcd`.
+* `renv`: recursively stores & reads json blobs from `etcd`.
+* `ndm`: generate upstart/whatever scripts from a service.json config
 
 ---
 
-# configuration via etcd
-
-## https://github.com/coreos/etcd
-
-A highly available key/value store intended for config & service discovery. We
-
-^ How we do configuration.
+# upsides
 
 ---
 
-# lots of complexity
+# downsides
 
-* each piece has a well-defined responsibility
-* each piece can be redundant
-* exceptions: db write primaries
+* yay distributed systems
+* backpressure isn't handled well
+* some mysterious wedging
+* everything is hand-rolled
 
----
-
-# conservatism won with node
-
-* we're mostly on node 0.10.37
-* memory leaks
-* will try again with iojs 1.8.x
-* or with node now that iojs is folded in :)
 
 ---
 
