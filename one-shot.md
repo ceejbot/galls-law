@@ -15,6 +15,8 @@ build-lists: true
 
 ![fit](images/registry_monolith.png)
 
+^ Here's where the registry started. A node command-line tool plus an app embedded in couchdb.
+
 ---
 
 ![](images/registry_monolith.png)
@@ -25,12 +27,13 @@ build-lists: true
 
 # [fit] javascript but not node
 
-^ some support systems written in node
+^ some support systems written in node. what's more, this was a really tangled piece of js. Not modular in any way.
 
 ---
 
 # advantages
 
+* hey! it was a simple working system
 * couchdb's replication is awesome
 * didn't have to implement auth
 * got away with storing package tarballs as couch attachments
@@ -43,6 +46,7 @@ build-lists: true
 * all of this fell over at scale
 * tarballs fell over first
 * we aren't erlang experts
+* not modular; hard to work on
 
 ^ Base64-encoded binary blobs. Observability. Couch has a module system, but it isn't npm.  
 
@@ -66,12 +70,19 @@ build-lists: true
 
 ---
 
-# [fit] end 2014: rewrite
+# [fit] npm's goal is to be
+# [fit] self-sustaining
+
+^ To do this, we needed to start adding features that people want to pay for. To do that, we needed to be able to change how the registry worked.
+
+---
+
+# end 2014: rewrite
 
 * future scaling
 * ability to add features easily
 * a use for our node expertise
-* npm's goal is to be self-sustaining
+
 
 ^ In order to have money coming in, we needed to make something worth paying for. we needed to start adding features Adding those features to the app embedded in couch was a non-starter
 
@@ -80,6 +91,8 @@ build-lists: true
 # [fit] shipped the core of it
 # [fit] as npm-enterprise
 # [fit] "npm in a box" service
+
+^ This is the rewrite minus some supporting features & with a different auth model.
 
 ---
 
@@ -116,9 +129,9 @@ build-lists: true
 # the stack (top)
 
 * Fastly as our CDN
-* aws ec2
+* AWS EC2
 * we do *not* use EBS or other AWS-specific techs
-* ubuntu trusty
+* Ubuntu Trusty
 
 ^ Amazon! Everybody uses it. it's cheap. It give us lots of control. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. Mostly DC redundant, with all single pts of failure in us-west-2.
 
@@ -135,15 +148,15 @@ build-lists: true
 
 ---
 
-# [fit] the dbs
+# the databases
 
 * couchdb for package data storage
 * postgres for users, billing, access control lists
-* replica of the package data in postres to drive website
+* replica of the package data in postgres to drive website
 
 ---
 
-# [fit] node frameworks
+# node frameworks
 
 * web site only: hapi
 * everything else: restify
@@ -159,6 +172,7 @@ build-lists: true
 * observable
 * sinatra/express routing
 * we like the connect middleware style
+* every process  has a repl
 
 ---
 
@@ -168,7 +182,9 @@ build-lists: true
 
 A highly available key/value store intended for config & service discovery. We recursively store & extract json blobs from it using `renv`.
 
-^ How we do configuration.
+Config eventually ends up as command-line options in an upstart script.
+
+^ How we do configuration. The config ends up on disk on each server so we don't need the db up to restart. Only to change & push config out to each box.
 
 ---
 
@@ -177,7 +193,14 @@ A highly available key/value store intended for config & service discovery. We r
 ## [fit] any box can be replaced
 ## [fit] by running an ansible play
 
-^ We love it.
+^ We love ansible. Don't care what automation system you use, just USE ONE.
+
+---
+
+# [fit] brace yourselves
+# [fit] diagrams incoming
+
+^ Brief tour of topology.
 
 ---
 
@@ -222,8 +245,8 @@ A highly available key/value store intended for config & service discovery. We r
 
 # conservatism won with node
 
-* we're mostly on node 0.10.37
-* memory leaks, some networking trouble
+* we're mostly on node 0.10.38
+* memory leaks, some networking trouble with early iojs
 * will try again with iojs 1.8.x
 * or with node now that iojs took over :)
 
@@ -231,8 +254,8 @@ A highly available key/value store intended for config & service discovery. We r
 
 # git deploy
 
-`git push origin master:deploy-production`
-`git push origin master:deploy-staging`
+`git push origin +master:deploy-production`
+`git push origin +master:deploy-staging`
 
 That's it. You've deployed.
 
@@ -240,23 +263,21 @@ That's it. You've deployed.
 
 # A git-deployable service
 
-- provisioned by ansible
 - haproxy load-balancing & monitoring
 - webhooks server
 - github webhooks trigger a bash script
 - any server can have many apps git-deployed to it
-
-The components are all open-sourced.
+- generally 1 process per core
 
 ---
 
 # open sourced parts
 
-* `jthooks`: run by ansible to set up github web hooks
-* `jthoober`: a webhook server run on each box that listens for webhook pushes from github
-* `rderby`: rolling restarts that stop when monitoring endpoints don't respond
-* `renv`: recursively stores & reads json blobs from `etcd`.
-* `ndm`: generate upstart/whatever scripts from a service.json config
+* [jthooks](https://github.com/ceejbot/jthooks): set up github web hooks from the command line
+* [jthoober](https://github.com/ceejbot/jthoober): a server that listens for webhook pushes from github & runs scripts in response
+* [rderby](https://github.com/npm/rderby): rolling restarts for servers behind haproxy
+* [renv](https://github.com/bcoe/renv): recursively manages json blobs with `etcd`.
+* [ndm](https://github.com/npm/ndm): generate upstart/whatever scripts from a service.json config
 
 ---
 
