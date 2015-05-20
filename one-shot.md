@@ -181,6 +181,24 @@ A highly available key/value store intended for config & service discovery. We r
 
 ---
 
+![fit](images/scalable_pieces.png)
+
+^ Here's a pretty handwave-y block diagram of the registry. Each of these pieces is a scalable unit.
+
+---
+
+![fit](images/doubled_pieces.png)
+
+^ Hey look, I just made most of my system redundant across AWS, just by replicating the logical modules.
+
+---
+
+![fit](images/registry_plus_web.png)
+
+^ Here's what it looks like in detail. Made this diagram for myself to keep track of everything; some things are missing. For instance, we have a staging environment.
+
+---
+
 # lots of complexity, but
 
 * each piece has a well-defined responsibility
@@ -213,7 +231,8 @@ A highly available key/value store intended for config & service discovery. We r
 
 # git deploy
 
-`git push origin branch:deploy-production`
+`git push origin master:deploy-production`
+`git push origin master:deploy-staging`
 
 That's it. You've deployed.
 
@@ -238,24 +257,6 @@ The components are all open-sourced.
 * `rderby`: rolling restarts that stop when monitoring endpoints don't respond
 * `renv`: recursively stores & reads json blobs from `etcd`.
 * `ndm`: generate upstart/whatever scripts from a service.json config
-
----
-
-![fit](images/scalable_pieces.png)
-
-^ Here's a pretty handwave-y block diagram of the registry. Each of these pieces is a scalable unit.
-
----
-
-![fit](images/doubled_pieces.png)
-
-^ Hey look, I just made most of my system redundant across AWS, just by replicating the logical modules.
-
----
-
-![fit](images/registry_plus_web.png)
-
-^ Here's what it looks like in detail. Made this diagram for myself to keep track of everything; some things are missing.
 
 ---
 
