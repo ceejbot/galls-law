@@ -92,7 +92,7 @@ build-lists: true
 
 ![fit](images/npm-growth-graph.png)
 
-^ Ever seen an exponential growth chart? This is on. Blue line packages. Red line monthly downloads. Joined at 150 million/month. Now it's 1.4 billion/month. 68 million dls in a single day.
+^ Ever seen an exponential growth chart? This is one. Blue line packages. Red line monthly downloads. Joined at 150 million/month. Now it's 1.4 billion/month. 68 million dls peak last week.
 
 ---
 
@@ -222,9 +222,12 @@ build-lists: true
 # [fit] second implementation
 # [fit] of that interface
 
+^ This time standalone, outside the monolith.
+
 ---
 
-# [fit] split your traffic
+# [fit] send requests to that
+# [fit] second implementation
 # [fit] with a proxy
 
 ^ Proxies let you divide & conquer.
@@ -336,7 +339,7 @@ build-lists: true
 # [fit] your platform
 # [fit] your database
 
-^ We went from js inside couchdb to js in node services.
+^ We went from js inside couchdb to js in node services. Also changed how we stored our data.
 
 ---
 
@@ -386,6 +389,14 @@ build-lists: true
 # [fit] finer-grained perf data
 
 ^ Metrics & logging. Can scale by multiplication of a smaller piece. For us this was a huge win. SEARCH. CouchDB was sweating.
+
+---
+
+# [fit] isolating tasks
+# [fit] showed us hot spots
+# [fit] even without splitting the monolith
+
+^ First we discovered that serving tarballs was making couchdb melt. Later on we split out cli search & observed it was a disaster. We rewrote it last week.
 
 ---
 
@@ -445,10 +456,10 @@ build-lists: true
 
 ---
 
-# [fit] put this technique
-# [fit] into your toolbox
+# [fit] let's recap!
+# [fit] how do you survive a rewrite?
 
-^ Start recapping.
+^ This approach won't always be what you need, but it is fantastic when you do. Put it into your back pocket and pull it out whenever you're looking at a rewrite.
 
 ---
 
@@ -456,13 +467,6 @@ build-lists: true
 # [fit] scale it later
 
 ^ Don't be ridiculous about scaling, but don't worry about it. You'll be able to afford it later if you've built something people want. Be ruthless about this.
-
----
-
-# [fit] Be bold
-# [fit] you can change your system
-
-^ I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works.
 
 ---
 
@@ -478,6 +482,13 @@ build-lists: true
 # [fit] I'm into proxies now.
 
 ^ Put a proxy on it. A proxy will let you divide & conquer.
+
+---
+
+# [fit] Be bold
+# [fit] you can change your system
+
+^ I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works.
 
 ---
 
