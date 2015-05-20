@@ -4,6 +4,15 @@ build-lists: true
 
 ---
 
+![left](images/bumper2_nasa_big.jpg)
+# [fit] C J Silverio
+## [fit] director of engineering, npm
+## [fit] @ceejbot
+
+^ In case you forgot who I am: this is who I am this year. Next year I might be somebody else. YNK.
+
+---
+
 ![fit](images/registry_monolith.png)
 
 ---
@@ -25,6 +34,7 @@ build-lists: true
 * couchdb's replication is awesome
 * didn't have to implement auth
 * got away with storing package tarballs as couch attachments
+* worked for a longer time than we deserved
 
 ---
 
@@ -38,7 +48,7 @@ build-lists: true
 
 ---
 
-# early 2014: stability
+# late 2013: stay up
 
 * pulled out tarballs
 * put varnish in front of everything
@@ -46,7 +56,24 @@ build-lists: true
 
 ---
 
+# early 2014: stability
+
+* tarballs onto a file system
+* found & stomped problems with our couchdb installation
+* load-balanced everything
+
+^ This was stable enough that 2014 became the year that node exploded. Node wasn't changing; npm worked. You all started using node to do front end development as well as the back end.
+
+---
+
 # [fit] end 2014: rewrite
+
+* future scaling
+* ability to add features easily
+* a use for our node expertise
+* npm's goal is to be self-sustaining
+
+^ In order to have money coming in, we needed to make something worth paying for. we needed to start adding features Adding those features to the app embedded in couch was a non-starter
 
 ---
 
@@ -56,13 +83,16 @@ build-lists: true
 
 ---
 
-# [fit] had a working npm in node
+# [fit] had a working registry in node
 # [fit] before we migrated the
 # [fit] public registry to it
 
+^ This was a great move, because we had a chance to stomp the big bugs long before we even considered moving the main registry over.
+
 ---
 
-# [fit] live for more than a month
+# [fit] April 2015
+# [fit] registry 2.0 in production
 
 ^ I teased this on twitter periodically. I would announce that "you're soaking in it" when new registry was live.
 
@@ -75,62 +105,33 @@ build-lists: true
 
 ---
 
-# [fit] rewrite benefits
-
-* future scaling
-* ability to add features easily
-* a use for our node expertise
-
----
-
 # [fit] registry 2.0:
 # [fit] lots of node
-
-^ we just finished a big rewrite: now we're a node service
-
----
-
 # [fit] yay microservices
 
----
-
-![fit](images/scalable_pieces.png)
-
-^ Here's a pretty handwave-y block diagram of the registry. Each of these pieces is a scalable unit.
+^ Now we start diving into details. I love hearing about the details of other companies' stacks, so I'm sharing now in the hopes that you share too. You ready?
 
 ---
 
-![fit](images/doubled_pieces.png)
+# the stack (top)
 
-^ Hey look, I just made most of my system redundant across AWS, just by replicating the logical modules.
-
----
-
-![fit](images/registry_john_madden.png)
-
-^ The real system diagram looks like this, but most of the time I don't need to think about it at this level. (If you want the details here, come to NodeConf OneShot on Saturday.)
-
-
-
-
----
-
-# [fit] the stack (top)
-
+* Fastly as our CDN
 * aws ec2
+* we do *not* use EBS or other AWS-specific techs
 * ubuntu trusty
-* mostly redundant across us east/west
 
-^ Amazon! Everybody uses it. it's cheap. It give us lots of control. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. we have a couple single pts of failure.
+^ Amazon! Everybody uses it. it's cheap. It give us lots of control. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. Mostly DC redundant, with all single pts of failure in us-west-2.
 
 ---
 
-# [fit] the stack (middle)
+# the stack (middle)
 
-* haproxy for load balancing
-* postgres for all other data
-* redis for caching
+* haproxy for load balancing & tls termination
+* a couple instances of pound for tls
 * nginx for static files
+* redis for caching
+
+^ Phasing pound out. Love the other three.
 
 ---
 
@@ -159,7 +160,6 @@ build-lists: true
 * sinatra/express routing
 * we like the connect middleware style
 
-
 ---
 
 # configuration via etcd
@@ -172,21 +172,42 @@ A highly available key/value store intended for config & service discovery. We r
 
 ---
 
-# lots of complexity
+# [fit] automation via ansible
+
+## [fit] any box can be replaced
+## [fit] by running an ansible play
+
+^ We love it.
+
+---
+
+# lots of complexity, but
 
 * each piece has a well-defined responsibility
 * each piece can be redundant
 * exceptions: db write primaries
+* each service can be worked on in isolation
+
+---
+
+# downsides
+
+* yay distributed systems
+* backpressure isn't handled well
+* some single points of failure: db primaries
+* metrics are a work in progress
+* everything is hand-rolled
+
+^ We rehearse the firedrill of replacing primaries. We also rehearse restoring from backup.
 
 ---
 
 # conservatism won with node
 
 * we're mostly on node 0.10.37
-* memory leaks
+* memory leaks, some networking trouble
 * will try again with iojs 1.8.x
-* or with node now that iojs is folded in :)
-
+* or with node now that iojs took over :)
 
 ---
 
@@ -220,26 +241,26 @@ The components are all open-sourced.
 
 ---
 
-# upsides
+![fit](images/scalable_pieces.png)
+
+^ Here's a pretty handwave-y block diagram of the registry. Each of these pieces is a scalable unit.
 
 ---
 
-# downsides
+![fit](images/doubled_pieces.png)
 
-* yay distributed systems
-* backpressure isn't handled well
-* some mysterious wedging
-* everything is hand-rolled
-
+^ Hey look, I just made most of my system redundant across AWS, just by replicating the logical modules.
 
 ---
 
-# operational excitement
+![fit](images/registry_plus_web.png)
 
-* We are still discovering the weak points.
-* Every incident results in new alerts.
-* Metrics are going to matter more to us.
-* (This system is at least more observable than couchdb.)
+^ Here's what it looks like in detail. Made this diagram for myself to keep track of everything; some things are missing.
+
+---
+
+# [fit] we're ready for the future
+# [fit] install all the modules!
 
 ---
 
