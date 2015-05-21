@@ -9,15 +9,15 @@ build-lists: true
 ## [fit] director of engineering, npm
 ## [fit] @ceejbot
 
-^ Working at npm is a privilege.
+^ Working at npm is a privilege. So much of what you do with javascript is made easier by what I do every day.
 
 ---
 
 
 # [fit] Cheating Gall's Law
-## [fit] How we split
-# [fit] a monolith
-## [fit] and lived to tell the tale
+# [fit] How we split a
+# [fit] monolith
+# [fit] and lived to tell the tale
 
 ^ If you haven't heard of Gall's Law, you'll know it well by the end of this talk. Not going to start there. Start with a monolith.
 
@@ -33,7 +33,7 @@ build-lists: true
 # [fit] monolith
 # [fit] everything in one process
 
-^ Really easy to write, often easy to deploy. Easy to think about.
+^ Really easy to write, often easy to deploy. Easy to think about. Your typical Rails app is often one of these, but there are many ways to write them.
 
 ---
 
@@ -55,7 +55,7 @@ build-lists: true
 # [fit] monoliths
 # [fit] work just fine
 
-^ The registry was just fine as a couch app, using couch auth. When there were 10K modules, practically anything was going to work.
+^ The registry was just fine as a couch app, using couch auth. When there were 10K modules, practically anything was going to work. This illustrates a general true thing: when you're small, just about everything works.
 
 ---
 
@@ -63,14 +63,14 @@ build-lists: true
 # [fit] to build a system
 # [fit] that satisfies your users
 
-^ When you start, your job is to make a thing people want to use. It's hard to make something that delights your users and is a viable product. You probably don't have a scaling problem.
+^ When you start, your job is to make a thing people want to use. It's hard to make something that delights your users and is a viable product. You don't have a scaling problem. Then, if you're lucky, something terrible happens.
 
 ---
 
 # [fit] success!
 # [fit] now scale it.
 
-^ What happens next is that you succeed. Your next job is to SURVIVE the fact that people want to use it.
+^ Your next job is to SURVIVE the fact that people want to use it. Your first reaction is probably to make your monolith bigger, maybe the size of jupiter.
 
 ---
 
@@ -86,7 +86,7 @@ build-lists: true
 # [fit] scaling monoliths
 # [fit] many copies of the full thing
 
-^ Scaling horizontally. You've got a single widget. You just make more copies of it. And sometimes you *really* succeed.
+^ Scaling horizontally. You've got a single widget. You just make more copies of it & load balance among them. If your database can cope with that, you're in good shape for a while. But sometimes you *really* succeed.
 
 ---
 
@@ -158,7 +158,7 @@ build-lists: true
 
 ---
 
-# Gall's Law
+# Gall's Law in full
 
 > A complex system that works is invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over with a working simple system.
 
@@ -169,7 +169,7 @@ build-lists: true
 # [fit] "A simple system
 # [fit] may or may not work."
 
-^ That's really encouraging. Gall is just a bundle of fun here. But he's saying things we all already suspect.
+^ That's really encouraging. Gall is just a bundle of fun here. But he's saying things we all already suspect. I know some of you want to argue with this, but I've stopped. My projects go better when I admit that Gall was right.
 
 ---
 
@@ -381,7 +381,7 @@ build-lists: true
 # [fit] Each piece is a
 # [fit] simple system
 
-^ More easily debugged & understood. Load on any one part can be characterized, because you've separated it. This was our biggest win: we identified the hot spots this way.
+^ More easily debugged & understood. You can understand it, develop it, & test it.
 
 ---
 
@@ -396,7 +396,7 @@ build-lists: true
 # [fit] showed us hot spots
 # [fit] even without splitting the monolith
 
-^ First we discovered that serving tarballs was making couchdb melt. Later on we split out cli search & observed it was a disaster. We rewrote it last week.
+^ Load on any one part can be characterized, because you've separated it. This was our biggest win: we identified the hot spots this way. First we discovered that serving tarballs was making couchdb melt. Later on we split out cli search & observed it was a disaster. We rewrote it last week.
 
 ---
 
@@ -418,7 +418,7 @@ build-lists: true
 # [fit] flip back & forth
 # [fit] between implementations
 
-^ You can test your assumptions. Send a portion of traffic through & load test. Flip back if you've got bugs.
+^ You can test your assumptions. Send a portion of traffic through & load test. Flip back if you've got bugs. Proxy is a facade in the design patterns sense.
 
 ---
 
@@ -470,25 +470,32 @@ build-lists: true
 
 ---
 
-# [fit] Nobody noticed
-# [fit] when we changed
-# [fit] the entire npm registry
+# [fit] respect Gall:
+# [fit] rewrite in pieces
 
-^ 120 seconds of downtime during the rollout thanks to a surprise merge. I'm a schlub. If I can do it, you can do it.
+^ Avoid complexity by rewriting small parts.
 
 ---
 
-# [fit] proxies are cool.
-# [fit] I'm into proxies now.
+# [fit] use a proxy
+# [fit] to divide & conquer
 
-^ Put a proxy on it. A proxy will let you divide & conquer.
+^ Put a proxy on it. A proxy will let you divide & conquer. Proxies are cool. Like fezzes. I'm into proxies now.
 
 ---
 
 # [fit] Be bold
 # [fit] you can change your system
 
-^ I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works.
+^ I've also seen needed rewrites never even start because of fear. I cannot help you with the politics, but I can tell you that you don't have to be afraid. You can change one small piece of a system at a time. This approach works.
+
+---
+
+# [fit] Nobody noticed
+# [fit] when we changed
+# [fit] the entire npm registry
+
+^ 120 seconds of downtime during the rollout because two humans failed to communicate about something. If I can do it, you can do it.
 
 ---
 
