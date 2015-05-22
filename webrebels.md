@@ -19,7 +19,7 @@ build-lists: true
 # [fit] monolith
 # [fit] and lived to tell the tale
 
-^ npm just finished a big rewrite of its registry service, a successful rewrite. this is such an unusual event in my career that I thought I'd talk a bit about how we did it.
+^ npm just finished a big rewrite of its registry service, a successful rewrite. this is such an unusual event in my career that I thought I'd talk a bit about how we did it. Let's start with Gall's Law.
 
 ---
 
@@ -29,13 +29,13 @@ build-lists: true
 # [fit] invariably found to have evolved
 # [fit] from a simple system that worked.
 
-^ A complex system that works is invariably found to have evolved from a simple system that worked. Do you want to argue with this? Hold this thought. Let's start with a monolith.
+^ A complex system that works is invariably found to have evolved from a simple system that worked. Do you want to argue with this? What does it have to do with monoliths? Well, let's find out.
 
 ---
 
 ![](images/Monolith-Sun-Moon.png)
 
-^ Lots of us start with monoliths! What's a monolith besides something that has Richard Strauss accompanying it?
+^ Yay monoliths! What's a monolith besides something that has Richard Strauss accompanying it?
 
 ---
 
