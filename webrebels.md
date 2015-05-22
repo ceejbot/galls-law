@@ -176,7 +176,7 @@ build-lists: true
 # [fit] "A simple system
 # [fit] may or may not work."
 
-^ That's really encouraging. Gall is just a bundle of fun here. But he's saying things we all already suspect. I know some of you want to argue with this, but I've stopped. My projects go better when I admit that Gall was right.
+^ That's really encouraging. Gall is just a bundle of fun here. He also said some other fun stuff like
 
 ---
 
@@ -184,13 +184,13 @@ build-lists: true
 # [fit] leave it alone.
 # [fit] Don't change anything."
 
-^ Doom and gloom!
+^ Doom and gloom! Oh crap!
 
 ---
 
 # [fit] Gall's Law
-# [fit] says we can't write our
-# [fit] complex replacement
+# [fit] warns us about
+# [fit] that rewrite
 
 ^ The system we need to replicate is complicated. We can't just build it from scratch. Most of the attempts to do this that I've seen in my career have ended badly. second system syndrome.
 
@@ -200,7 +200,7 @@ build-lists: true
 # [fit] a monolith
 # [fit] successfully?
 
-^ so how? npm is not on fire today, so obviously I know a secret.
+^ so how? npm is not on fire today, so obviously there's a way.
 
 ---
 
@@ -296,14 +296,14 @@ build-lists: true
 # [fit] how do people use your service?
 # [fit] measure performance
 
-^ For us, this was also a chance to find out what people were actually doing with the registry & how long each operation took. Find the hot spots.
+^ Log everything, count everything, generate metrics for everything. This is especially awesome if you're looking at a big legacy system that nobody understands any more. This also lets you identify your hot spots so you can isolate them.
 
 ---
 
 # [fit] second step
 # [fit] divide & conquer
 
-^ Now that you have data, replace a piece of your monolith. Don't rewrite the whole thing. Rewrite a simple piece.  Here's what our next steps looked like.
+^ Now that you have data & know what's most on fire, replace a piece of your monolith. Don't rewrite the whole thing. Rewrite a simple piece.  Here's what our next steps looked like.
 
 ---
 
@@ -375,7 +375,7 @@ build-lists: true
 
 ![fit](images/registry_monolith_still.png)
 
-^ Notice something here? It's our original monolith, still there, chugging along. What it does is reduced to the things couchdb is fantastic at: storing json blobs & replicating out.
+^ Notice something here? It's our original monolith, still there, chugging along. What it does is reduced to the things couchdb is fantastic at: storing json blobs & replicating the data to the rest of our system.
 
 ---
 
@@ -400,7 +400,7 @@ build-lists: true
 ---
 
 # [fit] isolating tasks
-# [fit] showed us hot spots
+# [fit] let us debug
 # [fit] even without splitting the monolith
 
 ^ Load on any one part can be characterized, because you've separated it. This was our biggest win: we identified the hot spots this way. First we discovered that serving tarballs was making couchdb melt. Later on we split out cli search & observed it was a disaster. We rewrote it last week.
@@ -446,7 +446,7 @@ build-lists: true
 
 > I see you have a poorly structured monolith. Would you like me to convert it into a poorly structured set of microservices?
 
-^ Cannot save you from poor decisions about modularity.
+^ Cannot save you from poor decisions about modularity. If you haven't figured out how to hide information, you're still in trouble.
 
 ---
 
