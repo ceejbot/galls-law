@@ -6,26 +6,36 @@ build-lists: true
 
 ![left](images/bumper2_nasa_big.jpg)
 # [fit] C J Silverio
-## [fit] director of engineering, npm
+## [fit] director of engineering, ![](images/npm.png)
+
 ## [fit] @ceejbot
 
-^ Working at npm is a privilege. So much of what you do with javascript is made easier by what I do every day.
+^ How many of you have ever used npm to install something? How many of you use it daily? The story I'm about to tell will be very relevant to you both because the work we did affected you & because the technique I'm about to describe will be helpful.
 
 ---
-
 
 # [fit] Cheating Gall's Law
 # [fit] How we split a
 # [fit] monolith
 # [fit] and lived to tell the tale
 
-^ If you haven't heard of Gall's Law, you'll know it well by the end of this talk. Not going to start there. Start with a monolith.
+^ npm just finished a big rewrite of its registry service, a successful rewrite. this is such an unusual event in my career that I thought I'd talk a bit about how we did it.
+
+---
+
+# [fit] Gall's Law
+
+# [fit] A complex system that works is
+# [fit] invariably found to have evolved
+# [fit] from a simple system that worked.
+
+^ A complex system that works is invariably found to have evolved from a simple system that worked. Do you want to argue with this? Hold this thought. Let's start with a monolith.
 
 ---
 
 ![](images/Monolith-Sun-Moon.png)
 
-^ Lots of us start with monoliths! What's a monolith?
+^ Lots of us start with monoliths! What's a monolith besides something that has Richard Strauss accompanying it?
 
 ---
 
@@ -33,7 +43,7 @@ build-lists: true
 # [fit] monolith
 # [fit] everything in one process
 
-^ Really easy to write, often easy to deploy. Easy to think about. Your typical Rails app is often one of these, but there are many ways to write them.
+^ Slightly disparaging term for everything in one process. Really easy to write, often easy to deploy. Easy to think about. Easy to squish around as you're discovering what your app needs to be.
 
 ---
 
@@ -70,7 +80,7 @@ build-lists: true
 # [fit] success!
 # [fit] now scale it.
 
-^ Your next job is to SURVIVE the fact that people want to use it. Your first reaction is probably to make your monolith bigger, maybe the size of jupiter.
+^ Your next job is to SURVIVE the fact that people want to use it. You might recall the story of the early days of Twitter, when they built your timeline by querying mysql. Your first reaction is probably to make your monolith bigger, maybe the size of jupiter.
 
 ---
 
@@ -140,21 +150,10 @@ build-lists: true
 
 ---
 
-# [fit] Gall's Law
+# [fit] what did that Gall guy say about
+# [fit] complex working systems?
 
-# [fit] A complex system that works is
-# [fit] invariably found to have evolved
-# [fit] from a simple system that worked.
-
-^ A complex system that works is invariably found to have evolved from a simple system that worked.
-
----
-
-# [fit] Systemantics:
-# [fit] How Systems Really Work
-# [fit] and How They Fail
-
-^ John Gall: a pediatrician. Interested in systems theory. This is the title of his big book, which is a darkly funny set of observations on systems of all kind. Insight: Systems operate in a constant state of failure.
+^ Didn't we just hear something about complex systems?
 
 ---
 
@@ -163,6 +162,14 @@ build-lists: true
 > A complex system that works is invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over with a working simple system.
 
 ^ A complex system that works is invariably found to have evolved from a simple system that worked. A complex system designed from scratch never works and cannot be patched up to make it work. You have to start over with a working simple system.
+
+---
+
+# [fit] Systemantics:
+# [fit] How Systems Really Work
+# [fit] and How They Fail
+
+^ John Gall: a pediatrician. Interested in systems theory. This is the title of his big book, which is a darkly funny set of observations on systems of all kind. Insight: Systems operate in a constant state of failure.
 
 ---
 
@@ -262,7 +269,7 @@ build-lists: true
 # [fit] Replace Varnish
 # [fit] with a node service
 
-^ You can put some logic into Varnish, but get a lot more mileage out of proxying at the application level. Way more control.
+^ You can put some logic into Varnish, but get a lot more mileage out of proxying at the application level. Way more control & awareness. We used node. You can use whatever you want.
 
 ---
 
@@ -368,7 +375,7 @@ build-lists: true
 
 ![fit](images/registry_monolith_still.png)
 
-^ Notice something here? It's our original monolith, still there, chugging along, just doing less than it used to.
+^ Notice something here? It's our original monolith, still there, chugging along. What it does is reduced to the things couchdb is fantastic at: storing json blobs & replicating out.
 
 ---
 
@@ -381,7 +388,7 @@ build-lists: true
 # [fit] Each piece is a
 # [fit] simple system
 
-^ More easily debugged & understood. You can understand it, develop it, & test it.
+^ Gall's Law says this is a prereq for things working at all. More easily debugged & understood. You can understand it, develop it, & test it.
 
 ---
 
@@ -473,7 +480,7 @@ build-lists: true
 # [fit] respect Gall:
 # [fit] rewrite in pieces
 
-^ Avoid complexity by rewriting small parts.
+^ Avoid complexity of a full rewrite by rewriting small parts. Modularity!
 
 ---
 
@@ -499,6 +506,8 @@ build-lists: true
 
 ---
 
+
 # [fit] npm loves you
+# [fit] `npm install -g npm@latest`
 
 ^ Got questions? Grab me later.
