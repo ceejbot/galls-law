@@ -34,7 +34,7 @@ build-lists: true
 # advantages
 
 * hey! it was a simple working system
-* couchdb's replication is awesome
+* couchdb's replication made mirrors easy
 * didn't have to implement auth
 * got away with storing package tarballs as couch attachments
 * worked for a longer time than we deserved
@@ -54,7 +54,7 @@ build-lists: true
 
 # late 2013: stay up
 
-* pulled out tarballs
+* pulled out tarballs into Joyent Manta
 * put varnish in front of everything
 * fastly CDN for geolocality
 
@@ -70,7 +70,8 @@ build-lists: true
 
 ---
 
-# [fit] npm's goal is to be
+# [fit] now we're stable!
+# [fit] npm's next goal:
 # [fit] self-sustaining
 
 ^ To do this, we needed to start adding features that people want to pay for. To do that, we needed to be able to change how the registry worked.
@@ -79,12 +80,35 @@ build-lists: true
 
 # end 2014: rewrite
 
+* a use for our node expertise
+* microservices
 * future scaling
 * ability to add features easily
-* a use for our node expertise
-
+* scoped modules!
 
 ^ In order to have money coming in, we needed to make something worth paying for. we needed to start adding features Adding those features to the app embedded in couch was a non-starter
+
+---
+
+# scoped modules
+
+Namespaces! Everybody can make public scoped modules.
+
+* `request`
+* `@ceejbot/request`
+* `@mikeal/request`
+
+$7/month and you can create private scoped modules.
+
+---
+
+# team
+
+* 3 engineers on the registry & operations
+* 2 engineers on the website
+* 2 engineers on the command-line client
+
+^ I soaked up most of the operations work during the main project. The CLI is in the middle of its own massive rewrite project.
 
 ---
 
@@ -111,16 +135,24 @@ build-lists: true
 
 ---
 
-# [fit] turning on private modules
+# [fit] turning on scoped modules
 # [fit] was flipping a feature switch
 
 ^ This is how you want it to be.
 
 ---
 
+# [fit] 150,000 modules
+# [fit] ~400GB tarballs
+# [fit] 68 million dls/day peak
+# [fit] 5800 req/sec peak
+
+^ We have great cache hit rates with Fastly. (Package tarballs very cacheable!) Lots of 304s.
+
+---
+
 # [fit] registry 2.0:
-# [fit] lots of node
-# [fit] yay microservices
+# [fit] node microservices
 
 ^ Now we start diving into details. I love hearing about the details of other companies' stacks, so I'm sharing now in the hopes that you share too. You ready?
 
@@ -128,10 +160,11 @@ build-lists: true
 
 # the stack (top)
 
-* Fastly as our CDN
+* Fastly as our CDN (faster in Europe!)
 * AWS EC2
 * we do *not* use EBS or other AWS-specific techs
 * Ubuntu Trusty
+* nagios + PagerDuty
 
 ^ Amazon! Everybody uses it. it's cheap. It give us lots of control. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. Mostly DC redundant, with all single pts of failure in us-west-2.
 
@@ -140,7 +173,7 @@ build-lists: true
 # the stack (middle)
 
 * haproxy for load balancing & tls termination
-* a couple instances of pound for tls
+* a couple instances of pound for tls (legacy)
 * nginx for static files
 * redis for caching
 
@@ -154,25 +187,37 @@ build-lists: true
 * postgres for users, billing, access control lists
 * replica of the package data in postgres to drive website
 
+^ The downloads service uses mysql, but we'll be rewriting that. Couchdb replicates. postgres: ad-hoc querying is nice, but replication is a mess.
+
 ---
 
-# node frameworks
+# big node modules
 
 * web site only: hapi
 * everything else: restify
+* knex to help with postgres
 
 ^ The public downloads service is hapi, but we'll rewrite that when we get around to making it perform well.
 
 ---
 
-# node-restify
+# restify
 
-* simple
 * barely a framework
+* trivial to get a json api running
 * observable
 * sinatra/express routing
 * we like the connect middleware style
-* every process  has a repl
+
+---
+
+# conventions across services
+
+* monitoring endpoints same for all
+* every process has a repl
+* json logging
+* config mostly through cmd-line arguments
+* some environment variable passing
 
 ---
 
@@ -182,9 +227,9 @@ build-lists: true
 
 A highly available key/value store intended for config & service discovery. We recursively store & extract json blobs from it using `renv`.
 
-Config eventually ends up as command-line options in an upstart script.
+`ndm` tool transforms json into command-line options in an upstart script.
 
-^ How we do configuration. The config ends up on disk on each server so we don't need the db up to restart. Only to change & push config out to each box.
+^ How we do configuration. Renv is cool: can merge config so staging & production can share. The config ends up on disk on each server so we don't need the db up to restart. Only to change & push config out to each box.
 
 ---
 
@@ -193,7 +238,7 @@ Config eventually ends up as command-line options in an upstart script.
 ## [fit] any box can be replaced
 ## [fit] by running an ansible play
 
-^ We love ansible. Don't care what automation system you use, just USE ONE.
+^ We love ansible. Don't care what automation system you use, just USE ONE. No special snowflakes
 
 ---
 
@@ -254,6 +299,8 @@ Config eventually ends up as command-line options in an upstart script.
 
 # git deploy
 
+Ansible to set it up once. Git to deploy.
+
 `git push origin +master:deploy-production`
 `git push origin +master:deploy-staging`
 
@@ -281,9 +328,27 @@ That's it. You've deployed.
 
 ---
 
-# [fit] we're ready for the future
-# [fit] install all the modules!
+# metrics
+
+All open-source. InfluxDB ➜ Grafana for dashboards.
+
+* [numbat-emitter](https://github.com/ceejbot/numbat-emitter) - client to emit metrics from any node service
+* [numbat-collector](https://github.com/ceejbot/numbat-collector) - service to collect & redirect to many outputs
+
+^ Not happy with this system yet-- easy to overwhelm our influx setup with too much data.
+
+---
+
+# future work
+
+* organizations for private modules! already in progress
+* make web site search a lot better
+* make the relational package data available via public api
+* more public replication points (all public packages, including scoped)
 
 ---
 
 # [fit] npm loves you
+# [fit] `npm install -g npm@latest`
+
+^ Please update your command-line client!
