@@ -1,6 +1,6 @@
 build-lists: true
-# [fit] npm registry 2.0
-# [fit] deep-dive
+# [fit] npm registry
+# [fit] dev-ops deep-dive
 
 ---
 
@@ -13,15 +13,11 @@ build-lists: true
 
 ---
 
-![fit](images/registry_monolith.png)
-
-^ Here's where the registry started. A node command-line tool plus an app embedded in couchdb.
-
----
-
 ![](images/registry_monolith.png)
 # [fit] registry 1.0
 # [fit] embedded in couchdb
+
+^ Here's where the registry started. A node command-line tool plus an app embedded in couchdb.
 
 ---
 
@@ -67,6 +63,8 @@ build-lists: true
 * tarballs onto a file system
 * found & stomped problems with our couchdb installation
 * load-balanced everything
+* operational maturity
+* big sign of success: many mirrors shut down
 
 ^ This was stable enough that 2014 became the year that node exploded. Node wasn't changing; npm worked. You all started using node to do front end development as well as the back end.
 
@@ -82,7 +80,7 @@ build-lists: true
 
 # end 2014: rewrite
 
-* a use for our node expertise
+* we are node experts!
 * microservices: node's natural architecture
 * future scaling
 * ability to add features easily
@@ -92,23 +90,21 @@ build-lists: true
 
 ---
 
-# scoped modules
+# scoped modules aka namespaces
 
-Namespaces! Everybody can make public scoped modules.
+* `hyperfs`: the famous module
+* `@mikeal/hyperfs`: super-hip fork
+* `@ceejbot/hyperfs`: my completely unrelated private module
 
-* `request`: the famous module
-* `@mikeal/request`: super-hip fork
-* `@ceejbot/request`: my completely unrelated module
-
-$7/month and you can create private scoped modules.
+Everybody can make public scoped modules. $7/month and you can create private scoped modules.
 
 ---
 
 # team
 
-* 3 engineers on the registry & operations
-* 2 engineers on the website
-* 2 engineers on the command-line client
+• 3 engineers on the registry & operations
+• 2 engineers on the website
+• 2 engineers on the command-line client
 
 ^ I soaked up most of the operations work during the main project. The CLI is in the middle of its own massive rewrite project.
 
@@ -117,6 +113,7 @@ $7/month and you can create private scoped modules.
 # [fit] shipped the core of it
 # [fit] as npm-enterprise
 # [fit] "npm in a box" service
+# [fit] \(our other way to make $)
 
 ^ This is the rewrite minus some supporting features & with a different auth model.
 
@@ -130,29 +127,15 @@ $7/month and you can create private scoped modules.
 
 ---
 
-# [fit] April 2015
-# [fit] registry 2.0 in production
+# [fit] in production April 2015
+# [fit] scoped modules
+# [fit] were a feature flip
 
-^ I teased this on twitter periodically. I would announce that "you're soaking in it" when new registry was live.
-
----
-
-# [fit] turning on scoped modules
-# [fit] was flipping a feature switch
-
-^ This is how you want it to be.
+^ I teased this on twitter periodically. I would announce that "you're soaking in it" when new registry was live. This is how you want it to be.
 
 ---
 
-# [fit] 150,000 modules
-# [fit] ~400GB tarballs
-# [fit] 68 million dls/day peak
-# [fit] 5800 req/sec peak
-
-^ We have great cache hit rates with Fastly. (Package tarballs very cacheable!) Lots of 304s.
-
----
-
+![](images/registry_plus_web.png)
 # [fit] registry 2.0:
 # [fit] node microservices
 
@@ -164,12 +147,12 @@ $7/month and you can create private scoped modules.
 
 * Fastly as our CDN (faster in Europe!)
 * AWS EC2
-* we do *not* use EBS or other AWS-specific techs
 * Ubuntu Trusty
 * nagios + PagerDuty
 * Github hosts our code
+* TravisCI for public & private repos
 
-^ Amazon! Everybody uses it. it's cheap. It give us lots of control. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. Mostly DC redundant, with all single pts of failure in us-west-2.
+^ Amazon! Everybody uses it. it's cheap. It give us lots of control. we do *not* use EBS or other AWS-specific techs. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. Mostly DC redundant, with all single pts of failure in us-west-2.
 
 ---
 
@@ -282,12 +265,12 @@ A highly available key/value store intended for config & service discovery. We r
 # downsides
 
 * yay distributed systems
-* backpressure isn't handled well
+* pretty sure a message queue is in our future
 * some single points of failure: db primaries
-* metrics are a work in progress
+* metrics & log handling is poor
 * everything is hand-rolled
 
-^ We rehearse the firedrill of replacing primaries. We also rehearse restoring from backup.
+^ The organic non-deterministic system with emergent properties that David mentioned earlier is something that has to be coped with. We rehearse the firedrill of replacing primaries. We also rehearse restoring from backup.
 
 ---
 
@@ -302,12 +285,12 @@ A highly available key/value store intended for config & service discovery. We r
 
 # git deploy
 
-Ansible to set it up once. Git to deploy. (Not the @mafintosh future!)
+This was a pain until we wrote a bunch of tools. Ansible to set it up once. Git to deploy. (Not the @mafintosh future!)
 
 `git push origin +master:deploy-production`
 `git push origin +master:deploy-staging`
 
-That's it. You've deployed.
+Each interested host will report in Slack when it's done. You've deployed!
 
 ---
 
@@ -342,12 +325,23 @@ All open-source. InfluxDB ➜ Grafana for dashboards.
 
 ---
 
+# [fit] 150,000 modules
+# [fit] ~400GB tarballs
+# [fit] 68 million dls/day peak
+# [fit] 5800 req/sec peak
+
+^ We have great cache hit rates with Fastly. (Package tarballs very cacheable!) Lots of 304s.
+
+---
+
 # future work
 
 * organizations for private modules! already in progress
 * make web site search a lot better
 * make the relational package data available via public api
 * more public replication points (all public packages, including scoped)
+
+^ Some great ideas about search at lunch from mafintosh & mikeal.
 
 ---
 
