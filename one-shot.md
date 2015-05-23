@@ -25,7 +25,9 @@ build-lists: true
 
 ---
 
-# [fit] javascript but not node
+# [fit] javascript
+# [fit] but not node
+# [fit] the shame, the shame
 
 ^ some support systems written in node. what's more, this was a really tangled piece of js. Not modular in any way.
 
@@ -72,7 +74,7 @@ build-lists: true
 
 # [fit] now we're stable!
 # [fit] npm's next goal:
-# [fit] self-sustaining
+# [fit] be self-sustaining
 
 ^ To do this, we needed to start adding features that people want to pay for. To do that, we needed to be able to change how the registry worked.
 
@@ -81,7 +83,7 @@ build-lists: true
 # end 2014: rewrite
 
 * a use for our node expertise
-* microservices
+* microservices: node's natural architecture
 * future scaling
 * ability to add features easily
 * scoped modules!
@@ -94,9 +96,9 @@ build-lists: true
 
 Namespaces! Everybody can make public scoped modules.
 
-* `request`
-* `@ceejbot/request`
-* `@mikeal/request`
+* `request`: the famous module
+* `@mikeal/request`: super-hip fork
+* `@ceejbot/request`: my completely unrelated module
 
 $7/month and you can create private scoped modules.
 
@@ -165,6 +167,7 @@ $7/month and you can create private scoped modules.
 * we do *not* use EBS or other AWS-specific techs
 * Ubuntu Trusty
 * nagios + PagerDuty
+* Github hosts our code
 
 ^ Amazon! Everybody uses it. it's cheap. It give us lots of control. Ubuntu is the least annoying of the linux distros. I'd pick debian if it didn't exist. Mostly DC redundant, with all single pts of failure in us-west-2.
 
@@ -299,7 +302,7 @@ A highly available key/value store intended for config & service discovery. We r
 
 # git deploy
 
-Ansible to set it up once. Git to deploy.
+Ansible to set it up once. Git to deploy. (Not the @mafintosh future!)
 
 `git push origin +master:deploy-production`
 `git push origin +master:deploy-staging`
