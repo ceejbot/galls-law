@@ -8,7 +8,7 @@ Or, how we split a monolith and lived to tell the tale. This is the story of how
 
 [slides in markdown format](webrebels.md)  
 [speakerdeck](https://speakerdeck.com/ceejbot/cheating-galls-law)  
-video link TBA
+[video](https://vimeo.com/128796804)
 
 ## OneShot Oslo: Registry dev-ops deep-dive
 
