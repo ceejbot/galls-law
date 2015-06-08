@@ -14,7 +14,7 @@ Or, how we split a monolith and lived to tell the tale. This is the story of how
 
 [slides in markdown format](one-shot.md)  
 [speakerdeck](https://speakerdeck.com/ceejbot/npm-registry-dev-ops-deep-dive)  
-video link TBA
+[video](https://www.youtube.com/watch?v=mGh3lW9oAgk)
 
 
 ## Credits
