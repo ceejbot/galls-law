@@ -19,7 +19,7 @@ build-lists: true
 # [fit] monolith
 # [fit] and lived to tell the tale
 
-^ npm just finished a big rewrite of its registry service, a successful rewrite. this is such an unusual event in my career that I thought I'd talk a bit about how we did it. Let's start with Gall's Law.
+^ npm just finished a big rewrite of its registry service, a successful rewrite. this is such an unusual event in my career that I thought I'd talk a bit about why it's hard & how we did it. Let's start with Gall's Law.
 
 ---
 
@@ -29,7 +29,7 @@ build-lists: true
 # [fit] invariably found to have evolved
 # [fit] from a simple system that worked.
 
-^ A complex system that works is invariably found to have evolved from a simple system that worked. Do you want to argue with this? What does it have to do with monoliths? Well, let's find out.
+^ A complex system that works is invariably found to have evolved from a simple system that worked. Do you want to argue with this? His full statement is stronger.
 
 ---
 
@@ -41,18 +41,18 @@ build-lists: true
 
 ---
 
+# [fit] "A simple system
+# [fit] may or may not work."
+
+^ That's really encouraging.
+
+---
+
 # [fit] Systemantics:
 # [fit] How Systems Really Work
 # [fit] and How They Fail
 
-^ John Gall: a pediatrician. Interested in systems theory. This is the title of his big book, which is a darkly funny set of observations on systems of all kind. Insight: Systems operate in a constant state of failure.
-
----
-
-# [fit] "A simple system
-# [fit] may or may not work."
-
-^ That's really encouraging. Gall is just a bundle of fun here. He also said some other fun stuff like
+^ John Gall: a pediatrician. Interested in systems theory. This is the title of his big book, which is a darkly funny set of observations on systems of all kind. Insight: Systems operate in a constant state of failure. Gall is just a bundle of fun here. Let's apply this to software systems.
 
 ---
 
@@ -131,7 +131,7 @@ build-lists: true
 
 ![fit](images/npm-growth-graph.png)
 
-^ Ever seen an exponential growth chart? This is one. Blue line packages. Red line monthly downloads. Joined at 150 million/month. Now it's 1.4 billion/month. 68 million dls peak last week.
+^ Ever seen an exponential growth chart? This is one. Blue line packages. Red line monthly downloads. Joined at 150 million/month. Now it's 1.4 billion/month. 72 million dls peak last week.
 
 ---
 
@@ -168,21 +168,21 @@ build-lists: true
 # [fit] just rewrite everything!
 # [fit] what's the problem?
 
-^ Just rewrite it all!
+^ Just rewrite it all in a million tiny pieces! no problem!
 
 ---
 
 # [fit] Your monolith is complex.
 # [fit] A split system is more complex.
 
-^ Complexity is the enemy of everything. And worse, there's a famous problem with rewrites.
+^ Complexity is the enemy of everything.
 
 ---
 
 # [fit] what did that Gall guy say about
 # [fit] complex working systems?
 
-^ Didn't we just hear something about complex systems?  Your target for a rewrite is the full complicated thing that's running in production today, not the simple thing you started with. Gall also said this
+^ Didn't we just hear something about complex systems? Your target for a rewrite is the full complicated thing that's running in production today, not the simple thing you started with. Famous problem: second system syndrome. Gall also said this
 
 ---
 
@@ -409,7 +409,7 @@ build-lists: true
 # [fit] let us debug
 # [fit] even without splitting the monolith
 
-^ Load on any one part can be characterized, because you've separated it. This was our biggest win: we identified the hot spots this way. First we discovered that serving tarballs was making couchdb melt. Later on we split out cli search & observed it was a disaster. We rewrote it last week.
+^ Load on any one part can be characterized, because you've separated it. This was our biggest win: we identified the hot spots this way. First we discovered that serving tarballs was making couchdb melt. Later on we split out cli search & observed it was a disaster. We rewrote it recently.
 
 ---
 
@@ -444,7 +444,7 @@ build-lists: true
 # [fit] now you've got a
 # [fit] distributed system
 
-^ You had one before but mostly you pretended you didn't because the hard parts were handled by somebody else. Now you have one that's entirely your responsibilty. We had race conditions. We're still not handling backpressure everywhere we need to.
+^ You had one before but mostly you pretended you didn't because the hard parts were handled by somebody else. Now you have one that's entirely your responsibilty. We had race conditions. We are slightly less stable than we were before the final step.
 
 ---
 
@@ -516,4 +516,4 @@ build-lists: true
 # [fit] ![](images/npm.png) loves you
 # [fit] `npm install -g npm@latest`
 
-^ Got questions? Grab me later.
+^ Got questions? Ask me for details at the panel. Or ask Maciej.
