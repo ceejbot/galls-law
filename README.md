@@ -10,6 +10,13 @@ Or, how we split a monolith and lived to tell the tale. This is the story of how
 [speakerdeck](https://speakerdeck.com/ceejbot/cheating-galls-law)  
 [video](https://vimeo.com/128796804)
 
+Take 2, electric boogaloo: the revised version of this for MediterraneaJS:
+
+[slides in markdown format](mediterraneajs.md)  
+[speakerdeck](https://speakerdeck.com/ceejbot/cheating-galls-law-mediterraneajs-editionw)  
+[video TBD](TBD)
+
+
 ## OneShot Oslo: Registry dev-ops deep-dive
 
 [slides in markdown format](one-shot.md)  
