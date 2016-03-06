@@ -1,6 +1,9 @@
-build-lists: true
-
 # [fit] Cheating Gall's Law
+# [fit] How we split a
+# [fit] monolith
+# [fit] and lived to tell the tale
+
+^ npm last year shipped a big rewrite of its registry service, a successful rewrite. this is such an unusual event in my career that I thought I'd talk a bit about why it's hard & how we did it. Let's start with Gall's Law.
 
 ---
 
@@ -11,15 +14,6 @@ build-lists: true
 ## [fit] @ceejbot
 
 ^ How many of you have ever used npm to install something? How many of you use it daily? The story I'm about to tell will be very relevant to you both because the work we did affected you & because the technique I'm about to describe will be helpful.
-
----
-
-# [fit] Cheating Gall's Law
-# [fit] How we split a
-# [fit] monolith
-# [fit] and lived to tell the tale
-
-^ npm just finished a big rewrite of its registry service, a successful rewrite. this is such an unusual event in my career that I thought I'd talk a bit about why it's hard & how we did it. Let's start with Gall's Law.
 
 ---
 
@@ -45,6 +39,8 @@ build-lists: true
 # [fit] often means starting with a
 # [fit] monolith
 
+^ Start with a simple system that works: you write a small thing & then build on it. You've done this! It's how every system builds organically if you don't think about it much but just make things.
+
 ---
 
 ![](images/Monolith-Sun-Moon.png)
@@ -57,7 +53,7 @@ build-lists: true
 # [fit] monolith
 # [fit] everything in one process
 
-^ Slightly disparaging term for everything in one process. Really easy to write, often easy to deploy. Easy to think about. Easy to squish around as you're discovering what your app needs to be. npm registry started with one of these!
+^ Disparaging term for everything in one process. Really easy to write, often easy to deploy. Easy to think about. Easy to squish around as you're discovering what your app needs to be. npm registry started with one of these inside couchdb.
 
 ---
 
@@ -65,7 +61,7 @@ build-lists: true
 # [fit] monoliths
 # [fit] work just fine
 
-^ The registry was just fine as a couch app, using couch auth. When there were 10K modules, practically anything was going to work. This illustrates a general true thing: when you're small, just about everything works.
+^ The registry was just fine as a couchdb app, using couchdb's auth. When there were 10K modules, practically anything was going to work. This illustrates a general true thing: when you're small, just about everything works.
 
 ---
 
@@ -80,13 +76,13 @@ build-lists: true
 # [fit] success!
 # [fit] now scale it.
 
-^ Your next job is to SURVIVE the fact that people want to use it. You might recall the story of the early days of Twitter, when they built your timeline by querying mysql. Your first reaction is probably to make your monolith bigger, maybe the size of jupiter.
+^ Your next job is to SURVIVE the fact that people want to use it. Recall the story of the early days of Twitter, when they built your timeline by querying mysql. That fell over hard once Twitter started succeeding. Your first reaction is probably to make your monolith bigger, maybe the size of jupiter. That is a really limited reaction.
 
 ---
 
 ![](images/easterisland021.jpg)
 
-^ You're gonna need more monoliths.
+^ The next thing you do is you start making lots of copies of your now-huge monolith.
 
 ---
 
@@ -112,7 +108,7 @@ build-lists: true
 # [fit] exponential monoliths
 # [fit] were going to be expensive
 
-^ Also they were on fire. Had to scale some way other than making a lot of copies of our couchdb.
+^ Had to scale some way other than making a lot of copies of our couchdb.
 
 ---
 
@@ -139,7 +135,7 @@ build-lists: true
 # [fit] what did that Gall guy say about
 # [fit] complex working systems?
 
-^ Didn't we just hear something about complex systems? Your target for a rewrite is the full complicated thing that's running in production today, not the simple thing you started with. Famous problem: second system syndrome. Gall also said this
+^ Didn't we just hear something about complex systems? Your target for a rewrite is the full complicated thing that's running in production today, not the simple thing you started with. Famous problem: second system effect.
 
 ---
 
@@ -184,7 +180,7 @@ build-lists: true
 # [fit] second implementation
 # [fit] with a proxy
 
-^ Proxies let you divide & conquer. This is the heart of modularization. It's how you slice apart code. You're going to do it with your services too.
+^ This is the heart of modularization. It's how you slice apart code. You're going to do it with your services too, by putting them behind a proxy. Proxies let you divide & conquer.
 
 ---
 
@@ -216,7 +212,7 @@ build-lists: true
 
 # [fit] now let's make our proxy smart
 # [fit] Replace Varnish
-# [fit] with a node service
+# [fit] with a microservice
 
 ^ You can put some logic into Varnish, but get a lot more mileage out of proxying at the application level. Way more control & awareness. We used node. You can use whatever you want.
 
@@ -229,6 +225,8 @@ build-lists: true
 ---
 
 # [fit] now do it again
+
+^ (go fast through these)
 
 ---
 
@@ -270,13 +268,6 @@ build-lists: true
 
 ---
 
-# [fit] more scaling dials to turn
-# [fit] smaller surfaces to test & debug
-
-^ We discovered where our hot spots were by splitting out responsibilities even among our replicated monoliths.
-
----
-
 # [fit] you have a working system
 # [fit] every step of the way
 
@@ -301,7 +292,7 @@ build-lists: true
 # [fit] use a proxy
 # [fit] to divide & conquer
 
-^ Put a proxy on it. A proxy will let you divide & conquer. You can test your assumptions. Send a portion of traffic through & load test. Flip back if you've got bugs. Proxy is a facade in the design patterns sense.
+^ Proxy is a facade in the design patterns sense. It lets you chop up your problem into smaller onces. You can test your assumptions. Send a portion of traffic through & load test. Flip back if you've got bugs.
 
 ---
 
@@ -323,4 +314,4 @@ build-lists: true
 # [fit] ![](images/npm.png) loves you
 # [fit] `npm install -g npm@latest`
 
-^ Remember to upgrade
+^ Remember to upgrade.
